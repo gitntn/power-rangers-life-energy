@@ -1,0 +1,15 @@
+{
+  "name": "Power Rangers DBG — Vida y Energía",
+  "short_name": "PR Vida/Energía",
+  "description": "Contador de vida (máx. 30) y energía (máx. 20) para dos jugadores de Power Rangers: Deck-Building Game.",
+  "lang": "es",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0c0e1a",
+  "theme_color": "#0c0e1a",
+  "icons": [
+    { "src": "assets/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

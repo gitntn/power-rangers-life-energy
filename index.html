@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Power Rangers DBG — Vida y Energía</title>
+<meta name="description" content="Contador de vida (máx. 30) y energía (máx. 20) para dos jugadores de Power Rangers: Deck-Building Game. / Life & energy tracker for two players.">
+<meta name="theme-color" content="#0c0e1a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
+<link rel="apple-touch-icon" href="assets/icons/icon.svg">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PR Vida/Energía">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ===== SPRITE DE ICONOS SVG ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-heart" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21s-7.5-4.6-10-9.2C.6 8.9 2 5.5 5.2 5.5c2 0 3.2 1.1 3.8 2.2C9.6 6.6 10.8 5.5 12.8 5.5c3.2 0 4.6 3.4 3.2 6.3C13.5 16.4 12 21 12 21Z" transform="translate(0.6 0)"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path fill="currentColor" d="M13 2 4 14h6l-1 8 9-13h-6l1-7z"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><rect x="4" y="10.5" width="16" height="3" rx="1.5" fill="currentColor"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path fill="currentColor" d="M10.5 4h3v6.5H20v3h-6.5V20h-3v-6.5H4v-3h6.5z"/></symbol>
+  <symbol id="i-reset" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M20 12a8 8 0 1 1-2.3-5.6"/><path fill="currentColor" d="M20 3.5v5h-5z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="none" stroke="currentColor" stroke-width="1.6" d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 5.5H4v2a3 3 0 0 0 3 3M17 5.5h3v2a3 3 0 0 1-3 3"/><path d="M12 14v3M9 20h6M10 20a2 3 0 0 1 4 0"/></g></symbol>
+</svg>
+
+<!-- ===== PANTALLA INICIAL: IDIOMA ===== -->
+<div id="lang-gate" class="lang-gate">
+  <div class="lg-card">
+    <div class="lg-logo">POWER RANGERS</div>
+    <div class="lg-sub">DECK-BUILDING GAME</div>
+    <p class="lg-title" data-i18n="chooseLang">Elegí el idioma / Choose language</p>
+    <div class="lg-buttons">
+      <button class="lg-btn" data-lang="es">Español</button>
+      <button class="lg-btn" data-lang="en">English</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TABLERO ===== -->
+<main id="board" class="board" hidden>
+
+  <!-- Jugador 2 (arriba, rotado) -->
+  <section class="player flip" data-player="2">
+    <div class="p-defeat" hidden><svg class="ico"><use href="#i-trophy"></use></svg><span data-i18n="defeated">DERROTADO</span></div>
+    <button class="p-name" type="button"><span class="p-name-txt">Jugador 2</span><span class="p-swatch"></span></button>
+
+    <div class="stat stat-life">
+      <button class="ctrl minus" data-act="life" data-dir="-1" aria-label="-1"><svg class="ico"><use href="#i-minus"></use></svg></button>
+      <div class="stat-mid">
+        <div class="stat-num life-num">30</div>
+        <div class="stat-cap"><svg class="ico"><use href="#i-heart"></use></svg><span data-i18n="life">VIDA</span></div>
+        <div class="delta life-delta"></div>
+      </div>
+      <button class="ctrl plus" data-act="life" data-dir="1" aria-label="+1"><svg class="ico"><use href="#i-plus"></use></svg></button>
+    </div>
+
+    <div class="stat stat-energy">
+      <button class="ctrl minus sm" data-act="energy" data-dir="-1" aria-label="-1"><svg class="ico"><use href="#i-minus"></use></svg></button>
+      <div class="stat-mid sm">
+        <div class="stat-num energy-num">0</div>
+        <div class="stat-cap"><svg class="ico"><use href="#i-bolt"></use></svg><span data-i18n="energy">ENERGÍA</span></div>
+        <div class="delta energy-delta"></div>
+      </div>
+      <button class="ctrl plus sm" data-act="energy" data-dir="1" aria-label="+1"><svg class="ico"><use href="#i-plus"></use></svg></button>
+    </div>
+  </section>
+
+  <!-- Barra central -->
+  <div class="hub">
+    <button id="btn-lang" class="hub-btn" title="Idioma / Language"><svg class="ico"><use href="#i-globe"></use></svg></button>
+    <button id="btn-reset" class="hub-btn hub-reset" title="Reiniciar / Reset"><svg class="ico"><use href="#i-reset"></use></svg><span data-i18n="reset">REINICIAR</span></button>
+    <div class="hub-mode">
+      <span data-i18n="lifeMax">Vida 30</span> · <span data-i18n="energyMax">Energía 20</span>
+    </div>
+  </div>
+
+  <!-- Jugador 1 (abajo) -->
+  <section class="player" data-player="1">
+    <button class="p-name" type="button"><span class="p-name-txt">Jugador 1</span><span class="p-swatch"></span></button>
+
+    <div class="stat stat-life">
+      <button class="ctrl minus" data-act="life" data-dir="-1" aria-label="-1"><svg class="ico"><use href="#i-minus"></use></svg></button>
+      <div class="stat-mid">
+        <div class="stat-num life-num">30</div>
+        <div class="stat-cap"><svg class="ico"><use href="#i-heart"></use></svg><span data-i18n="life">VIDA</span></div>
+        <div class="delta life-delta"></div>
+      </div>
+      <button class="ctrl plus" data-act="life" data-dir="1" aria-label="+1"><svg class="ico"><use href="#i-plus"></use></svg></button>
+    </div>
+
+    <div class="stat stat-energy">
+      <button class="ctrl minus sm" data-act="energy" data-dir="-1" aria-label="-1"><svg class="ico"><use href="#i-minus"></use></svg></button>
+      <div class="stat-mid sm">
+        <div class="stat-num energy-num">0</div>
+        <div class="stat-cap"><svg class="ico"><use href="#i-bolt"></use></svg><span data-i18n="energy">ENERGÍA</span></div>
+        <div class="delta energy-delta"></div>
+      </div>
+      <button class="ctrl plus sm" data-act="energy" data-dir="1" aria-label="+1"><svg class="ico"><use href="#i-plus"></use></svg></button>
+    </div>
+    <div class="p-defeat" hidden><svg class="ico"><use href="#i-trophy"></use></svg><span data-i18n="defeated">DERROTADO</span></div>
+  </section>
+</main>
+
+<!-- ===== FIN DE PARTIDA ===== -->
+<div id="gameover" class="gameover" hidden>
+  <div class="go-card">
+    <svg class="go-trophy"><use href="#i-trophy"></use></svg>
+    <div class="go-title" data-i18n="winner">¡GANADOR!</div>
+    <div id="go-who" class="go-who">Jugador 1</div>
+    <button id="go-again" class="go-btn" data-i18n="playAgain">Jugar de nuevo</button>
+  </div>
+</div>
+
+<!-- ===== PALETA DE COLORES (por jugador) ===== -->
+<div id="palette" class="palette" hidden>
+  <div class="pal-card">
+    <p class="pal-title" data-i18n="pickColor">Color del Ranger</p>
+    <div class="pal-name">
+      <input id="pal-input" type="text" maxlength="16" autocomplete="off">
+    </div>
+    <div id="pal-swatches" class="pal-swatches"></div>
+    <button id="pal-close" class="pal-close" data-i18n="ok">Listo</button>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

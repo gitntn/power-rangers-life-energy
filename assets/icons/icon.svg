@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a1e3a"/>
+      <stop offset="1" stop-color="#05060d"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="110" fill="url(#bg)"/>
+  <!-- corazón (vida) -->
+  <path fill="#ff4d4d" d="M170 300c-40-30-70-58-70-96 0-30 22-52 50-52 20 0 34 11 42 26 8-15 22-26 42-26 28 0 50 22 50 52 0 38-30 66-70 96l-22 17z" transform="translate(-6 8)"/>
+  <!-- rayo (energía) -->
+  <path fill="#ffd23f" d="M330 120 240 300h70l-16 96 110-176h-72z"/>
+</svg>
