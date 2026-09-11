@@ -222,10 +222,28 @@
     palTarget = null;
   }
 
+  // ---------- Mantener pantalla encendida (Wake Lock) ----------
+  let wakeLock = null;
+  let wakeWanted = false;
+  async function requestWakeLock() {
+    if (!wakeWanted || !('wakeLock' in navigator) || document.visibilityState !== 'visible') return;
+    try {
+      wakeLock = await navigator.wakeLock.request('screen');
+      wakeLock.addEventListener('release', () => { wakeLock = null; });
+    } catch (_) { /* el navegador puede pedir un gesto primero */ }
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') requestWakeLock();
+  });
+
   // ---------- Inicio ----------
   function showBoard() {
     langGate.hidden = true;
     board.hidden = false;
+    wakeWanted = true;
+    requestWakeLock();
+    // reintento tras el primer toque (algunos navegadores exigen un gesto del usuario)
+    board.addEventListener('pointerdown', requestWakeLock, { once: true });
     render();
   }
 
