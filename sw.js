@@ -1,5 +1,5 @@
 /* Service worker — cache offline sencillo */
-const CACHE = 'pr-dbg-v4';
+const CACHE = 'pr-dbg-v5';
 const ASSETS = [
   './',
   './index.html',
