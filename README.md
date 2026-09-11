@@ -3,7 +3,10 @@
 App web para llevar la **vida** y la **energía** de dos jugadores en *Power Rangers: Deck-Building Game*.
 Pensada para el teléfono apoyado en la mesa entre los dos jugadores: el panel de arriba está **girado 180°** para que cada uno lea su marcador de frente (estilo *lifetap*).
 
-🎮 **Jugar:** https://gitntn.github.io/power-rangers-life-energy/
+🎮 **Jugar (web):** https://gitntn.github.io/power-rangers-life-energy/
+
+📱 **App Android (APK):** https://github.com/gitntn/power-rangers-life-energy/releases/latest
+Descargá el `.apk` desde el celular, abrilo y permití "instalar apps desconocidas" cuando Android lo pida. La app mantiene la **pantalla encendida** mientras jugás.
 
 ---
 
