@@ -48,7 +48,7 @@
 
   <!-- Jugador 2 (arriba, rotado) -->
   <section class="player flip" data-player="2">
-    <div class="p-defeat" hidden><svg class="ico"><use href="#i-trophy"></use></svg><span data-i18n="defeated">DERROTADO</span></div>
+    <div class="p-out" hidden><span data-i18n="atZero">0 ❤ · subí + para revivir</span></div>
     <button class="p-name" type="button"><span class="p-name-txt">Jugador 2</span><span class="p-swatch"></span></button>
 
     <div class="stat stat-life">
@@ -104,19 +104,9 @@
       </div>
       <button class="ctrl plus sm" data-act="energy" data-dir="1" aria-label="+1"><svg class="ico"><use href="#i-plus"></use></svg></button>
     </div>
-    <div class="p-defeat" hidden><svg class="ico"><use href="#i-trophy"></use></svg><span data-i18n="defeated">DERROTADO</span></div>
+    <div class="p-out" hidden><span data-i18n="atZero">0 ❤ · subí + para revivir</span></div>
   </section>
 </main>
-
-<!-- ===== FIN DE PARTIDA ===== -->
-<div id="gameover" class="gameover" hidden>
-  <div class="go-card">
-    <svg class="go-trophy"><use href="#i-trophy"></use></svg>
-    <div class="go-title" data-i18n="winner">¡GANADOR!</div>
-    <div id="go-who" class="go-who">Jugador 1</div>
-    <button id="go-again" class="go-btn" data-i18n="playAgain">Jugar de nuevo</button>
-  </div>
-</div>
 
 <!-- ===== PALETA DE COLORES (por jugador) ===== -->
 <div id="palette" class="palette" hidden>

@@ -13,8 +13,7 @@
     es: {
       chooseLang: 'Elegí el idioma',
       life: 'VIDA', energy: 'ENERGÍA',
-      reset: 'REINICIAR', defeated: 'DERROTADO',
-      winner: '¡GANADOR!', playAgain: 'Jugar de nuevo',
+      reset: 'REINICIAR', atZero: '0 ❤ · subí + para revivir',
       lifeMax: 'Vida 30', energyMax: 'Energía 20',
       pickColor: 'Nombre y color', ok: 'Listo',
       p1: 'Jugador 1', p2: 'Jugador 2',
@@ -23,8 +22,7 @@
     en: {
       chooseLang: 'Choose language',
       life: 'LIFE', energy: 'ENERGY',
-      reset: 'RESET', defeated: 'DEFEATED',
-      winner: 'WINNER!', playAgain: 'Play again',
+      reset: 'RESET', atZero: '0 ❤ · tap + to revive',
       lifeMax: 'Life 30', energyMax: 'Energy 20',
       pickColor: 'Name and color', ok: 'Done',
       p1: 'Player 1', p2: 'Player 2',
@@ -88,7 +86,6 @@
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const langGate = $('#lang-gate');
   const board = $('#board');
-  const gameover = $('#gameover');
   const palette = $('#palette');
 
   // deltas acumulados por (jugador+stat)
@@ -118,10 +115,10 @@
     nameEl.textContent = pl.name || t('p' + p);
     // vida baja
     sec.classList.toggle('low', pl.life > 0 && pl.life <= 5);
-    // derrota
-    const defeated = pl.life <= 0;
-    $('.p-defeat', sec).hidden = !defeated;
-    sec.classList.toggle('defeated', defeated);
+    // sin vida (0): panel opaco pero reversible, se puede volver a subir
+    const out = pl.life <= 0;
+    $('.p-out', sec).hidden = !out;
+    sec.classList.toggle('dead', out);
   }
   function render() {
     renderPlayer(1);
@@ -144,8 +141,6 @@
     tick(dir > 0 ? 'up' : 'down');
     renderPlayer(p);
     save();
-
-    if (stat === 'life' && next === 0) checkGameOver();
   }
 
   function showDelta(p, stat, dir) {
@@ -166,29 +161,12 @@
     }, 1600);
   }
 
-  // ---------- Fin de partida ----------
-  function checkGameOver() {
-    const dead1 = state.players[1].life <= 0;
-    const dead2 = state.players[2].life <= 0;
-    if (!dead1 && !dead2) return;
-    let winner = null;
-    if (dead1 && !dead2) winner = 2;
-    else if (dead2 && !dead1) winner = 1;
-    // si ambos a 0, empate: no anunciamos ganador
-    if (winner) {
-      $('#go-who').textContent = state.players[winner].name || t('p' + winner);
-      $('#go-who').style.color = state.players[winner].color;
-      gameover.hidden = false;
-    }
-  }
-
   // ---------- Reiniciar ----------
   function resetGame() {
     for (const p of [1, 2]) {
       state.players[p].life = LIFE_START;
       state.players[p].energy = ENERGY_START;
     }
-    gameover.hidden = true;
     Object.keys(deltaAcc).forEach(k => deltaAcc[k] = 0);
     $$('.delta').forEach(d => d.classList.remove('show'));
     render();
@@ -285,15 +263,9 @@
       save(); applyLang();
     });
 
-    // fin de partida
-    $('#go-again').addEventListener('click', resetGame);
-
     // arranque: si ya hay idioma elegido, saltar la puerta
     if (state.lang) showBoard();
     else applyLang();
-
-    // volver a mostrar fin de partida si se recarga con alguien en 0
-    if (state.lang) checkGameOver();
   }
 
   document.addEventListener('DOMContentLoaded', init);

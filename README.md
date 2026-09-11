@@ -12,7 +12,8 @@ Pensada para el teléfono apoyado en la mesa entre los dos jugadores: el panel d
 - **Vida:** empieza en **30**, máximo **30**, mínimo **0**.
 - **Energía:** empieza en **0**, máximo **20**, mínimo **0**.
 - Botones **+ / −** para vida y energía de cada jugador. Mantené presionado para sumar/restar rápido.
-- Cuando la vida de un jugador llega a **0**, **pierde** y se anuncia al **ganador**.
+- La vida y la energía **nunca bajan de 0** (si te pasás apretando, quedan en 0).
+- Cuando la vida de un jugador llega a **0**, su panel se **oscurece** y avisa, pero **no pierde la partida**: podés seguir tocando **+** para volver a subir la vida (por si fue una equivocación).
 - **Reiniciar** vuelve a 30 de vida y 0 de energía para ambos.
 - Cada jugador puede tocar su nombre para **cambiar el nombre y el color de Ranger**.
 - El estado se guarda solo (localStorage): si cerrás y volvés, sigue donde estaba.
