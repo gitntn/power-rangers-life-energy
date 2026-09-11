@@ -1,12 +1,14 @@
 /* Service worker — cache offline sencillo */
-const CACHE = 'pr-dbg-v3';
+const CACHE = 'pr-dbg-v4';
 const ASSETS = [
   './',
   './index.html',
   './css/styles.css',
   './js/app.js',
   './manifest.webmanifest',
-  './assets/icons/icon.svg'
+  './assets/icons/icon.svg',
+  './assets/icons/icon-192.png',
+  './assets/icons/icon-512.png'
 ];
 
 self.addEventListener('install', (e) => {
