@@ -81,6 +81,16 @@
     } catch (_) {}
   }
 
+  // ---------- Sonido de apertura (comunicador) ----------
+  const openSfx = new Audio('assets/sfx/comunicador.mp3');
+  openSfx.preload = 'auto';
+  let openSfxDone = false;
+  function playOpenSfx() {
+    if (openSfxDone) return;
+    openSfx.currentTime = 0;
+    openSfx.play().then(() => { openSfxDone = true; }).catch(() => {});
+  }
+
   // ---------- Referencias DOM ----------
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -284,6 +294,10 @@
     // arranque: si ya hay idioma elegido, saltar la puerta
     if (state.lang) showBoard();
     else applyLang();
+
+    // sonido del comunicador al abrir; si el navegador bloquea el autoplay, suena con el primer toque
+    playOpenSfx();
+    document.addEventListener('pointerdown', playOpenSfx, { once: true, capture: true });
   }
 
   document.addEventListener('DOMContentLoaded', init);
